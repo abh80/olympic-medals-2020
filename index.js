@@ -2,6 +2,7 @@ const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const fs = require("fs");
 const { setInterval } = require("timers");
+const { exec } = require("child_process");
 const getMedals = () => {
   fetch(
     "https://olympics.com/tokyo-2020/olympic-games/en/results/all-sports/medal-standings.htm",
@@ -40,10 +41,9 @@ const getMedals = () => {
       console.log(`[${new Date().toISOString()}] Updated Data.`);
     });
 };
+
 getMedals();
-setInterval(() => {
-  getMedals();
-}, 600000);
+
 function writeData(raw) {
   let data = { last_updated: Date.now(), medals: raw };
   fs.writeFileSync("./data.json", JSON.stringify(data), "utf8");

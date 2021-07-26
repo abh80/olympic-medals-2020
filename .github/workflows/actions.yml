@@ -1,4 +1,6 @@
-on: push
+on:
+  schedule:
+    - cron: "*/5 * * * *"
 jobs:
   medal_fetch:
     runs-on: ubuntu-latest
@@ -11,3 +13,14 @@ jobs:
         run: npm install
       - name: Fetch Medal
         run: node .
+      - name: Update and Commit
+        run: |
+          git --local config user.name "Github Actions"
+          git --local config user.email "action@github.com"
+          git add -a
+          git commit "Update Data"
+      - name: Push to Github
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
