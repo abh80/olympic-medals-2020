@@ -1,8 +1,10 @@
 name: Olympic-Medal-2020
-on:
-  schedule:
-    - cron: '*/5 * * * *'
 
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  "*/5 * * * *"
+    
 jobs:
   medal_fetch:
     runs-on: ubuntu-latest
