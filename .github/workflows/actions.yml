@@ -1,0 +1,12 @@
+jobs:
+  medal_fetch:
+    runs_on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@master
+        with:
+          node_version: 14
+      - name: Install Dependencies
+        run: npm install
+      - name: Fetch Medal
+        run: node .
