@@ -13,8 +13,8 @@ jobs:
         run: node .
       - name: Update and Commit
         run: |
-          git --local config user.name "Github Actions"
-          git --local config user.email "action@github.com"
+          git config --local user.name "Github Actions"
+          git config --local user.email "action@github.com"
           git add -A
           git commit "Update Data"
       - name: Push to Github
