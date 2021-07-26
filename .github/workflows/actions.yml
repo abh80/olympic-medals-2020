@@ -1,3 +1,4 @@
+on: push
 jobs:
   medal_fetch:
     runs_on: ubuntu-latest
