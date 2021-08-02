@@ -14,7 +14,7 @@ jobs:
       - name: Fetch Medal
         with:
           env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node .
       - name: Update and Commit
         run: |
