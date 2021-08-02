@@ -1,8 +1,8 @@
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const fs = require("fs");
-const { setInterval } = require("timers");
-const { exec } = require("child_process");
+const actions = require("@actions/core");
+
 const getMedals = () => {
   fetch(
     "https://olympics.com/tokyo-2020/olympic-games/en/results/all-sports/medal-standings.htm",
@@ -38,6 +38,7 @@ const getMedals = () => {
         });
       });
       writeData(data);
+      update_bio(data);
       console.log(`[${new Date().toISOString()}] Updated Data.`);
     });
 };
@@ -47,4 +48,22 @@ getMedals();
 function writeData(raw) {
   let data = { last_updated: Date.now(), medals: raw };
   fs.writeFileSync("./data.json", JSON.stringify(data), "utf8");
+}
+async function update_bio(raw) {
+  const countries = raw
+    .map((x) => x.country.replace("People's Republic of China", "China"))
+    .map((x) => x.replace("United States of America", "United States"));
+  const bio = `Olympics Stats (2020) : 
+  1) ${countries[0]} 🥇 ${raw[0].gold} 🥈 ${raw[0].silver} 🥉 ${raw[0].bronze} |
+  2) ${countries[1]} 🥇 ${raw[1].gold} 🥈 ${raw[1].silver} 🥉 ${raw[1].bronze} |
+  3) ${countries[2]} 🥇 ${raw[2].gold} 🥈 ${raw[2].silver} 🥉 ${raw[2].bronze} |
+  `;
+  const data = await fetch("https://api.github.com/user", {
+    method: "patch",
+    headers: {
+      Authorization: "token " + process.env["GITHUB_TOKEN"],
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ bio }),
+  });
 }

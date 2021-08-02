@@ -1,7 +1,5 @@
 name: Olympic-Medal-2020
-on:
-  schedule:
-    - cron: '*/5 * * * *'
+on: push
 
 jobs:
   medal_fetch:
@@ -14,6 +12,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Fetch Medal
+        with:
+          env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node .
       - name: Update and Commit
         run: |
