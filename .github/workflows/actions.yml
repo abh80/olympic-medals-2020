@@ -12,9 +12,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Fetch Medal
-        with:
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node .
       - name: Update and Commit
         run: |
