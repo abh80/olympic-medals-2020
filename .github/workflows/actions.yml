@@ -1,5 +1,8 @@
 name: Olympic-Medal-2020
-on: push
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  "*/15 * * * *"
 
 jobs:
   medal_fetch:
